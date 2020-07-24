@@ -16,6 +16,7 @@ namespace ShipEffectsContinued
         string vibrations = "ShipEffectsContinued/Sounds/vibrations";
         string stress_big = "ShipEffectsContinued/Sounds/metalstress";
         string atmos_normal = "ShipEffectsContinued/Sounds/atmo";
+        string reentry_audio = "ShipEffectsContinued/Sounds/eentry";
 
         public string thumpLowSound = "ShipEffectsContinued/Sounds/thumplow";
         public string thumpHeavySound = "ShipEffectsContinued/Sounds/thump";
@@ -56,6 +57,7 @@ namespace ShipEffectsContinued
         bool vibrationsSet;
         bool atmosphereSet;
         bool stressBigSet;
+        bool reentrySet;
 
         bool thumpLowSet;
         bool thumpHeavySet;
@@ -83,8 +85,8 @@ namespace ShipEffectsContinued
         float counter = 0;
 
         bool doEngineThrust;
-        bool onlyIVA = true;
-        bool onlyIfCrewed = true;
+        bool onlyIVA = false;
+        bool onlyIfCrewed = false;
 
         void Start()
         {
@@ -344,13 +346,23 @@ namespace ShipEffectsContinued
                 if ((!onlyIfCrewed || isCrewed) && !MapView.MapIsEnabled && (onlyIVA == false || InternalCamera.Instance.isActive))
                 {
                     //wind and pressure?
-                    if (surfSpeed > 10 || vesselRot > 1.5f)
+                    if (surfSpeed > 10 |surfSpeed < 2570 | vesselRot > 1.5f)
                     {
                         SoundFX(atmosphereGroup, ((atmDensity * surfSpeed - 10f) / 80f) + ((vesselRot - 1.5f) / 7.0f * atmDensity), aVolCtrl, 90f, true);
                     }
                     else
                     {
                         SoundFX(atmosphereGroup, false);
+                    }
+                    
+                    //reentry
+                    if (surfSpeed > 2570 | atmDensity > 0.1)
+                    {
+                        SoundFX(reentry, aVolCtrl, 90f, true);
+                    }
+                    else
+                    {
+                    SoundFX(reentry, false);
                     }
 
                     //dynamics
