@@ -85,8 +85,8 @@ namespace ShipEffectsContinued
         float counter = 0;
 
         bool doEngineThrust;
-        bool onlyIVA = false;
-        bool onlyIfCrewed = false;
+        bool onlyIVA = true;
+        bool onlyIfCrewed = true;
 
         void Start()
         {
