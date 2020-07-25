@@ -16,7 +16,7 @@ namespace ShipEffectsContinued
         string vibrations = "ShipEffectsContinued/Sounds/vibrations";
         string stress_big = "ShipEffectsContinued/Sounds/metalstress";
         string atmos_normal = "ShipEffectsContinued/Sounds/atmo";
-        string reentry_audio = "ShipEffectsContinued/Sounds/eentry";
+        string reentry = "ShipEffectsContinued/Sounds/reentry";
 
         public string thumpLowSound = "ShipEffectsContinued/Sounds/thumplow";
         public string thumpHeavySound = "ShipEffectsContinued/Sounds/thump";
@@ -31,6 +31,7 @@ namespace ShipEffectsContinued
         FXGroup vibrationsGroup = new FXGroup("vibrationsFXGroup");
         FXGroup atmosphereGroup = new FXGroup("atmosphereFXGroup");
         FXGroup stressBigGroup = new FXGroup("stressBigFXGroup");
+        FXGroup reentryGroup = new FXGroup("reentryFXGroup");
 
         FXGroup thumpLowGroup = new FXGroup("ThumpLowFXGroup");
         FXGroup thumpHeavyGroup = new FXGroup("ThumpHeavyFXGroup");
@@ -113,6 +114,7 @@ namespace ShipEffectsContinued
             vibrationsSet = createGroup(vibrationsGroup, vessel, vibrations, true, true);
             stressBigSet = createGroup(stressBigGroup, vessel, stress_big, true, true);
             atmosphereSet = createGroup(atmosphereGroup, vessel, atmos_normal, true, true);
+            reentrySet = createGroup(reentryGroup, vessel, reentry, true, true);
 
             thumpLowSet = createGroup(thumpLowGroup, vessel, thumpLowSound, false, false);
             thumpHeavySet = createGroup(thumpHeavyGroup, vessel, thumpHeavySound, false, false);
@@ -346,7 +348,7 @@ namespace ShipEffectsContinued
                 if ((!onlyIfCrewed || isCrewed) && !MapView.MapIsEnabled && (onlyIVA == false || InternalCamera.Instance.isActive))
                 {
                     //wind and pressure?
-                    if (surfSpeed > 10 |surfSpeed < 2570 | vesselRot > 1.5f)
+                    if (surfSpeed > 10 && surfSpeed < 2570 || vesselRot > 1.5f)
                     {
                         SoundFX(atmosphereGroup, ((atmDensity * surfSpeed - 10f) / 80f) + ((vesselRot - 1.5f) / 7.0f * atmDensity), aVolCtrl, 90f, true);
                     }
@@ -356,13 +358,13 @@ namespace ShipEffectsContinued
                     }
                     
                     //reentry
-                    if (surfSpeed > 2570 | atmDensity > 0.1)
+                    if (surfSpeed > 2570 || atmDensity > 0.1)
                     {
-                        SoundFX(reentry, aVolCtrl, 90f, true);
+                        SoundFX(reentryGroup, ((atmDensity * surfSpeed - 10f) / 80f) + ((vesselRot - 1.5f) / 7.0f * atmDensity), aVolCtrl, 90f, true);
                     }
                     else
                     {
-                    SoundFX(reentry, false);
+                    SoundFX(reentryGroup, false);
                     }
 
                     //dynamics
