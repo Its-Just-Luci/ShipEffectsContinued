@@ -16,6 +16,7 @@ namespace ShipEffectsContinued
         string vibrations = "ShipEffectsContinued/Sounds/vibrations";
         string stress_big = "ShipEffectsContinued/Sounds/metalstress";
         string atmos_normal = "ShipEffectsContinued/Sounds/atmo";
+        string reentry = "ShipEffectsContinued/Sounds/reentry";
 
         public string thumpLowSound = "ShipEffectsContinued/Sounds/thumplow";
         public string thumpHeavySound = "ShipEffectsContinued/Sounds/thump";
